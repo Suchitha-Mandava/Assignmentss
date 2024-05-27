@@ -1,0 +1,19 @@
+name: Comment on PR Merge
+
+on:
+  pull_request:
+    types: [closed]
+
+jobs:
+  add-comment:
+    runs-on: ubuntu-latest
+    if: github.event.pull_request.merged == true
+    steps:
+      - name: Add a comment
+        uses: peter-evans/create-or-update-comment@v3
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          repository: ${{ github.repository }}
+          issue-number: ${{ github.event.pull_request.number }}
+          body: |
+            Thank you for your contribution! This PR has been merged.
